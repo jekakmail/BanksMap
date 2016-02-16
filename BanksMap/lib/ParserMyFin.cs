@@ -10,7 +10,7 @@ using HtmlAgilityPack;
 
 namespace BanksMap.lib
 {
-    public class Parser
+    public class ParserMyFin
     {
         const string ParseSite = @"http://myfin.by";
         const string ParseLink = ParseSite + @"/currency/minsk";
@@ -27,9 +27,9 @@ namespace BanksMap.lib
             ParseSite + @"/currency/mogilev"
         }; 
 
-        public Parser()
+        public ParserMyFin()
         {
-            ParseCity();
+            //ParseCity();
         }
 
         public void ParseCity()
@@ -41,6 +41,13 @@ namespace BanksMap.lib
             db.Banks.AddRange(lstBanks);
             db.SaveChanges();
         }
+
+        private void ParseBanks()
+        { }
+
+        private void ParseDepartments()
+        { }
+
 
         private void Parse(string city)
         {
@@ -60,14 +67,16 @@ namespace BanksMap.lib
                 var bank = new Bank();
                 try
                 {
+                    //Получаем название банка и ссылку
                     bank.Name = bankItem.SelectSingleNode("td[1]/span/a").InnerText;
-                    bank.Link = string.Format("{0}{1}", ParseSite,
+                    bank.LocalLink = string.Format("{0}{1}", ParseSite,
                         bankItem.SelectSingleNode("td[1]/span/a").GetAttributeValue("href", null));
                     if (!string.IsNullOrEmpty(bank.Name))
                         lstBanks.Add(bank);
                 }
                 catch (Exception)
                 {
+                    //Получаем таблицу отделений банка
                     var departmentNodes = bankItem.SelectNodes("td/div/div/div[2]/table/tbody/tr");
                     var lstDepartments = new List<Department>();
 
@@ -80,9 +89,10 @@ namespace BanksMap.lib
                         var lstCurrencies = new List<Currency>();
                         try
                         {
+                            //Получаем название отделения, ссылку, адрес и телефон
                             department.Name =
                                 departmentItem.SelectSingleNode("td/div[@class='ttl']/a").InnerText;
-                            department.Link = string.Format("{0}{1}", ParseSite,
+                            department.LocalLink = string.Format("{0}{1}", ParseSite,
                                 departmentItem.SelectSingleNode("td/div[@class='ttl']/a")
                                     .GetAttributeValue("href", null));
                             department.Phone =
@@ -90,6 +100,7 @@ namespace BanksMap.lib
                             department.Address =
                                 departmentItem.SelectSingleNode("td/div[@class='address']/a").InnerText;
 
+                            //Получаем курсы валют по отделению
                              lstCurrencies.Add(new Currency()
                             {
                                 Name = departmentItem.SelectSingleNode("td[3]/i").GetAttributeValue("data-c", null),
@@ -108,7 +119,9 @@ namespace BanksMap.lib
                                 Purchase = Convert.ToDecimal(departmentItem.SelectSingleNode("td[7]").InnerText),
                                 Sale = Convert.ToDecimal(departmentItem.SelectSingleNode("td[8]").InnerText)
                             });
+
                             department.Currencies = lstCurrencies;
+
                             if (!string.IsNullOrEmpty(department.Name))
                             {
                                 lstDepartments.Add(department);
@@ -119,7 +132,7 @@ namespace BanksMap.lib
 
                         }
                     }
-
+                    //Привязываем коллекцию отделений к банку.
                     lstBanks[lstBanks.Count - 1].Departments = lstDepartments;
 
                 }

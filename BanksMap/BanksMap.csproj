@@ -87,7 +87,8 @@
     <Compile Include="Entity\Bank.cs" />
     <Compile Include="Entity\Currency.cs" />
     <Compile Include="Entity\Department.cs" />
-    <Compile Include="lib\Parser.cs" />
+    <Compile Include="lib\Convertation.cs" />
+    <Compile Include="lib\ParserMyFin.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

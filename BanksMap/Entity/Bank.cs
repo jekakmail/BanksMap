@@ -10,12 +10,11 @@ namespace BanksMap.Entity
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Link { get; set; }
+        public string LocalLink { get; set; }
+        public string Site { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
         public List<Department> Departments { get; set; }
 
-        //public Bank()
-        //{
-        //    Departments = new List<Department>();
-        //}
     }
 }

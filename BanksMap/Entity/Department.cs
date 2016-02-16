@@ -12,7 +12,12 @@ namespace BanksMap.Entity
         public string Name { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        public string Link { get; set; }
+        public string LocalLink { get; set; }
+
+        public double latitude { get; set; }
+        public double longitude { get; set; }
+
+
         public Bank Bank { get; set; } 
         public List<Currency> Currencies { get; set; }
         

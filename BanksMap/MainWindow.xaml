@@ -1,13 +1,18 @@
 ﻿<Window x:Class="BanksMap.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mapProviders="clr-namespace:GMap.NET.MapProviders;assembly=GMap.NET.Core"
         xmlns:windowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         Title="MainWindow"
         Width="525"
         Height="350">
     <Grid>
 
-        <windowsPresentation:GMapControl />
+        <windowsPresentation:GMapControl Name="GMapControl"
+                                         CanDragMap="True"
+                                         Loaded="GMapControl_Loaded" />
+
 
     </Grid>
 </Window>
+
