@@ -4,9 +4,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BanksMap.Entity;
 
-namespace BanksMap
+namespace Database.Entity
 {
     public class Context : DbContext
     {

@@ -17,13 +17,11 @@ namespace BanksMap.lib
             const string apiKey = "AIzaSyDXpU0jJ0CaihQ3PZwF3J5qjtJfrpY5raY";
             //Запрос к API геокодирования Google.
             var url = string.Format(
-                //"http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=true_or_false&language=ru",
                 "https://maps.googleapis.com/maps/api/geocode/xml?address={0}&language=ru&key={1}",
                 Uri.EscapeDataString(address),apiKey);
 
             //Выполняем запрос к универсальному коду ресурса (URI).
-            var request =
-                (HttpWebRequest)WebRequest.Create(url);
+            var request = (HttpWebRequest)WebRequest.Create(url);
 
             //Получаем ответ от интернет-ресурса.
             var response = request.GetResponse();

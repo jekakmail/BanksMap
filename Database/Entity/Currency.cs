@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BanksMap.Entity
+namespace Database.Entity
 {
     public class Currency
     {

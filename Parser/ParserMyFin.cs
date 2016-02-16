@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using BanksMap.Entity;
 using HtmlAgilityPack;
 
-namespace BanksMap.lib
+namespace Parser
 {
     public class ParserMyFin
     {

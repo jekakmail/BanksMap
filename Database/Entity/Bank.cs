@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BanksMap.Entity
+namespace Database.Entity
 {
     public class Bank
     {
@@ -14,6 +14,7 @@ namespace BanksMap.Entity
         public string Site { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
+
         public List<Department> Departments { get; set; }
 
     }
