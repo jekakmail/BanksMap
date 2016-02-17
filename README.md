@@ -7,4 +7,4 @@
 Обновление банков, филиалов и курсов валют (парсинг).
 
 При разработке использую:
-C#, WPF, ADO.NET, Entity (CF), LINQ, GMap, HtmlAgilityPack, GoogleAPI
+C#, WPF, MVVM, ADO.NET, Entity (CF), LINQ, GMap, HtmlAgilityPack, GoogleAPI
