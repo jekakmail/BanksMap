@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using BanksMap.Entity;
+using Database.Entity;
 using HtmlAgilityPack;
 
-namespace Parser
+namespace Database.Parser
 {
     public class ParserMyFin
     {

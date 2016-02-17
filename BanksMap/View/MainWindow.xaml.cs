@@ -39,7 +39,7 @@ namespace BanksMap
             this.DataContext = this;
             //_p = new ParserMyFin();
             Convertation conv = new Convertation();
-            //conv.ConvertDepartmentsAddress();
+            conv.ConvertDepartmentsAddress("GoogleAPI.xml");
             //cbBanks.ItemsSource = lstBanks;
             //cbBanks.DisplayMemberPath = "Name";
             //cbBanks.SelectedItem = lstBanks.First();
@@ -49,8 +49,8 @@ namespace BanksMap
         private void GMapControl_Loaded(object sender, RoutedEventArgs e)
         {
             GMapControl.MapProvider = GMapProviders.OpenStreetMap;
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
-
+            GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
+                
             GMapControl.CanDragMap = true;
             GMapControl.DragButton = MouseButton.Left;
             GMapControl.Position = new GMap.NET.PointLatLng(53.902800, 27.561759);
@@ -73,8 +73,8 @@ namespace BanksMap
 
         private void CbBanks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ObservableCollection<Department> lstDepartmens = Database.Func.GetDepartments((Bank)cbBanks.SelectedItem);
-
+            ObservableCollection<Department> lstDepartmens = Database.Func.GetDepartments((sender as ComboBox).SelectedItem as Bank);
+            GMapControl.Markers.Clear();
             
 
                 foreach (var depart in lstDepartmens)
@@ -82,10 +82,9 @@ namespace BanksMap
                     GMapMarker point = new GMapMarker(new PointLatLng(depart.latitude,depart.longitude));
                     point.Shape = new Ellipse()
                     {
-                        Width = 20,
-                        Height = 20,
-                        Stroke = Brushes.Red,
-                        StrokeThickness = 3
+                        Width = 10,
+                        Height = 10,
+                        Fill = Brushes.Red
                     };
                     point.Offset = new Point(-16, -32);
                     point.ZIndex = int.MaxValue;

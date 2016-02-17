@@ -23,7 +23,11 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="Банки">
-                <ComboBox Name="cbBanks" ItemsSource="{Binding Path=lstBanks}" DisplayMemberPath="Name" SelectedIndex="0" SelectionChanged="CbBanks_OnSelectionChanged"/>
+                <ComboBox Name="cbBanks"
+                          DisplayMemberPath="Name"
+                          ItemsSource="{Binding Path=lstBanks}"
+                          SelectedIndex="0"
+                          SelectionChanged="CbBanks_OnSelectionChanged" />
             </GroupBox>
             <GroupBox Grid.Row="1" Header="Валюта">
                 <Grid>
