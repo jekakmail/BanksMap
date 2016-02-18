@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Database.Entity;
@@ -17,9 +19,10 @@ namespace Database
             using (var context = new Context())
             {
                 context.Banks.Load();
-                var query = from bank in context.Banks
-                    //where bank.Departments != null
-                    select bank;
+                //var query = from bank in context.Banks
+                //    select bank;
+
+                var query = context.Banks.Select(p => p);
 
                 var lst = query.ToList();
                 foreach (var item in lst)
@@ -46,6 +49,26 @@ namespace Database
                     lstDepartments.Add(item);
                 }
                 return lstDepartments;
+            }
+        }
+
+        public static ObservableCollection<string> GetCurrenciesNames()
+        {
+            var lstCurrenciesName = new ObservableCollection<string>();
+            using (var context = new Context())
+            {
+                context.Currencies.Load();
+                //var query = from currency in context.Currencies
+                //    group currency by currency.Name;
+
+                var query = context.Currencies.GroupBy(currency => currency.Name).Select(grouping => grouping.Key);
+                
+                foreach (var item in query.ToList())
+                {
+                    lstCurrenciesName.Add(item);
+                }
+
+                return lstCurrenciesName;
             }
         } 
     }
