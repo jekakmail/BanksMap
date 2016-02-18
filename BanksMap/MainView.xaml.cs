@@ -14,9 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Database;
+using BanksMap.Markers;
 using Database.Entity;
-using Database.Parser;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
@@ -26,24 +25,13 @@ namespace BanksMap
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainView : Window
     {
-        private ParserMyFin _p;
 
-        public ObservableCollection<Bank> lstBanks { get; set; }
-
-        public MainWindow()
+        public MainView()
         {
-            lstBanks = Database.Func.GetBanks();
             InitializeComponent();
-            this.DataContext = this;
-            //_p = new ParserMyFin();
-            Convertation conv = new Convertation();
-            conv.ConvertDepartmentsAddress("GoogleAPI.xml");
-            //cbBanks.ItemsSource = lstBanks;
-            //cbBanks.DisplayMemberPath = "Name";
-            //cbBanks.SelectedItem = lstBanks.First();
-
+            //this.DataContext = this;
         }
 
         private void GMapControl_Loaded(object sender, RoutedEventArgs e)
@@ -52,7 +40,7 @@ namespace BanksMap
             GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
                 
             GMapControl.CanDragMap = true;
-            GMapControl.DragButton = MouseButton.Left;
+            //GMapControl.DragButton = MouseButton.Left;
             GMapControl.Position = new GMap.NET.PointLatLng(53.902800, 27.561759);
             GMapControl.Bearing = 0;
 
@@ -68,7 +56,9 @@ namespace BanksMap
             //курсор мыши.
             GMapControl.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             GMapControl.ShowCenter = false;
-            
+
+            //GMapControl.MouseLeftButtonDown += gMapControl_MouseLeftButtonDown;
+
         }
 
         private void CbBanks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -80,19 +70,27 @@ namespace BanksMap
                 foreach (var depart in lstDepartmens)
                 {
                     GMapMarker point = new GMapMarker(new PointLatLng(depart.latitude,depart.longitude));
-                    point.Shape = new Ellipse()
-                    {
-                        Width = 10,
-                        Height = 10,
-                        Fill = Brushes.Red
-                    };
-                    point.Offset = new Point(-16, -32);
+                     
+                    point.Shape = new DepartmentMarker(this, point, depart.Name);
+                   //point.Offset = new Point(-16, -32);
                     point.ZIndex = int.MaxValue;
 
                     GMapControl.Markers.Add(point);
                    
                 }
             
+        }
+
+        void gMapControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Переделать в соответствии с MVVM
+
+            System.Windows.Point p = e.GetPosition(GMapControl);
+            GMapMarker NewMarker = new GMapMarker(GMapControl.Position);
+            NewMarker.Shape = new UserMarker(this, NewMarker, "Пользовательский маркер");
+            NewMarker.Position = GMapControl.FromLocalToLatLng((int)p.X, (int)p.Y);
+            GMapControl.Markers.Add(NewMarker);
+
         }
     }
 }
