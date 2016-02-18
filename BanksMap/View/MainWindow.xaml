@@ -1,14 +1,10 @@
-﻿<Window x:Class="BanksMap.MainView"
+﻿<Window x:Class="BanksMap.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:BanksMap"
         xmlns:windowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         Title="MainWindow"
         Width="525"
         Height="350">
-    <Window.DataContext>
-        <local:MainViewModel />
-    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="392*" />
@@ -18,8 +14,7 @@
         <windowsPresentation:GMapControl Name="GMapControl"
                                          Grid.Column="0"
                                          CanDragMap="True"
-                                         Loaded="GMapControl_Loaded"
-                                         MouseLeftButtonDown="gMapControl_MouseLeftButtonDown" />
+                                         Loaded="GMapControl_Loaded" />
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -30,8 +25,7 @@
             <GroupBox Grid.Row="0" Header="Банки">
                 <ComboBox Name="cbBanks"
                           DisplayMemberPath="Name"
-                          ItemsSource="{Binding Path=LstBanks,
-                                                Mode=TwoWay}"
+                          ItemsSource="{Binding Path=lstBanks}"
                           SelectedIndex="0"
                           SelectionChanged="CbBanks_OnSelectionChanged" />
             </GroupBox>
@@ -42,7 +36,7 @@
                         <RowDefinition Height="3" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ComboBox ItemsSource="{Binding Path=LstCurrencies, Mode=TwoWay}" SelectedIndex="0" />
+                    <ComboBox />
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
