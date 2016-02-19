@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:BanksMap"
+        xmlns:map="clr-namespace:BanksMap.Controls"
         xmlns:windowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         Title="MainWindow"
         Width="525"
@@ -15,11 +16,12 @@
             <ColumnDefinition Width="125*" />
         </Grid.ColumnDefinitions>
 
-        <windowsPresentation:GMapControl Name="GMapControl"
-                                         Grid.Column="0"
-                                         CanDragMap="True"
-                                         Loaded="GMapControl_Loaded"
-                                         MouseLeftButtonDown="gMapControl_MouseLeftButtonDown" />
+        <map:MyGMapControl x:Name="GMapCtrl"
+                           Grid.Column="0"
+                           CanDragMap="True"
+                           Loaded="GMapControl_Loaded"
+                           LstMarkers="{Binding LstDepartments}"
+                           MouseLeftButtonDown="gMapControl_MouseLeftButtonDown" />
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -28,12 +30,12 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="Банки">
-                <ComboBox Name="cbBanks"
+                <ComboBox Name="CbBanks"
                           DisplayMemberPath="Name"
-                          ItemsSource="{Binding Path=LstBanks,
-                                                Mode=TwoWay}"
+                          ItemsSource="{Binding Path=LstBanks}"
                           SelectedIndex="0"
-                          SelectionChanged="CbBanks_OnSelectionChanged" />
+                          SelectedItem="{Binding Path=SelectedBank,
+                                                 Mode=TwoWay}" />
             </GroupBox>
             <GroupBox Grid.Row="1" Header="Валюта">
                 <Grid>
@@ -42,7 +44,7 @@
                         <RowDefinition Height="3" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ComboBox ItemsSource="{Binding Path=LstCurrencies, Mode=TwoWay}" SelectedIndex="0" />
+                    <ComboBox ItemsSource="{Binding Path=LstCurrencies}" SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}" />
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />

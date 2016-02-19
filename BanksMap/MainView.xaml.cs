@@ -19,6 +19,7 @@ using Database.Entity;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
+using BanksMap.Controls;
 
 namespace BanksMap
 {
@@ -31,31 +32,32 @@ namespace BanksMap
         public MainView()
         {
             InitializeComponent();
-            //this.DataContext = this;
+
+           
         }
 
         private void GMapControl_Loaded(object sender, RoutedEventArgs e)
         {
-            GMapControl.MapProvider = GMapProviders.OpenStreetMap;
+            GMapCtrl.MapProvider = GMapProviders.OpenStreetMap;
             GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
-                
-            GMapControl.CanDragMap = true;
+
+            GMapCtrl.CanDragMap = true;
             //GMapControl.DragButton = MouseButton.Left;
-            GMapControl.Position = new GMap.NET.PointLatLng(53.902800, 27.561759);
-            GMapControl.Bearing = 0;
+            GMapCtrl.Position = new GMap.NET.PointLatLng(53.902800, 27.561759);
+            GMapCtrl.Bearing = 0;
 
             // МАСШТАБИРОВАНИЕ
             //Указываем значение максимального приближения.
-            GMapControl.MaxZoom = 18;
+            GMapCtrl.MaxZoom = 18;
             //Указываем значение минимального приближения.
-            GMapControl.MinZoom = 2;
+            GMapCtrl.MinZoom = 2;
             //Указываем, что при загрузке карты будет использоваться 
             //16ти кратной приближение.
-            GMapControl.Zoom = 17;
+            GMapCtrl.Zoom = 17;
             //Устанавливаем центр приближения/удаления
             //курсор мыши.
-            GMapControl.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-            GMapControl.ShowCenter = false;
+            GMapCtrl.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            GMapCtrl.ShowCenter = false;
 
             //GMapControl.MouseLeftButtonDown += gMapControl_MouseLeftButtonDown;
 
@@ -63,34 +65,23 @@ namespace BanksMap
 
         private void CbBanks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ObservableCollection<Department> lstDepartmens = Database.Func.GetDepartments((sender as ComboBox).SelectedItem as Bank);
-            GMapControl.Markers.Clear();
+            //ObservableCollection<Department> lstDepartmens = Database.Func.GetDepartments((sender as ComboBox).SelectedItem as Bank);
             
-
-                foreach (var depart in lstDepartmens)
-                {
-                    GMapMarker point = new GMapMarker(new PointLatLng(depart.latitude,depart.longitude));
-                     
-                    point.Shape = new DepartmentMarker(this, point, depart.Name);
-                   //point.Offset = new Point(-16, -32);
-                    point.ZIndex = int.MaxValue;
-
-                    GMapControl.Markers.Add(point);
-                   
-                }
-            
+            //gMapCtrl_LoadPickers(Database.Func.GetDepartments((sender as ComboBox).SelectedItem as Bank));
         }
 
         void gMapControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Переделать в соответствии с MVVM
 
-            System.Windows.Point p = e.GetPosition(GMapControl);
-            GMapMarker NewMarker = new GMapMarker(GMapControl.Position);
-            NewMarker.Shape = new UserMarker(this, NewMarker, "Пользовательский маркер");
-            NewMarker.Position = GMapControl.FromLocalToLatLng((int)p.X, (int)p.Y);
-            GMapControl.Markers.Add(NewMarker);
-
+            System.Windows.Point p = e.GetPosition(GMapCtrl);
+            GMapMarker newMarker = new GMapMarker(GMapCtrl.Position);
+            newMarker.Shape = new UserMarker(this, newMarker, "Пользовательский маркер");
+            newMarker.Position = GMapCtrl.FromLocalToLatLng((int)p.X, (int)p.Y);
+            GMapCtrl.Markers.Add(newMarker);
+            
         }
+
+       
     }
 }

@@ -22,20 +22,20 @@ namespace BanksMap.Markers
     /// </summary>
     public partial class UserMarker : UserControl
     {
-        Popup Popup;
-        Label Label;
-        GMapMarker Marker;
-        MainView MainWindow;
+        Popup _popup;
+        Label _label;
+        GMapMarker _marker;
+        MainView _mainWindow;
 
         public UserMarker(MainView window, GMapMarker marker, string title)
         {
             this.InitializeComponent();
 
-            this.MainWindow = window;
-            this.Marker = marker;
+            this._mainWindow = window;
+            this._marker = marker;
 
-            Popup = new Popup();
-            Label = new Label();
+            _popup = new Popup();
+            _label = new Label();
 
             this.Unloaded += new RoutedEventHandler(CustomMarkerDemo_Unloaded);
             this.Loaded += new RoutedEventHandler(CustomMarkerDemo_Loaded);
@@ -46,24 +46,24 @@ namespace BanksMap.Markers
             this.MouseLeftButtonUp += new MouseButtonEventHandler(CustomMarkerDemo_MouseLeftButtonUp);
             this.MouseLeftButtonDown += new MouseButtonEventHandler(CustomMarkerDemo_MouseLeftButtonDown);
 
-            Popup.Placement = PlacementMode.Mouse;
+            _popup.Placement = PlacementMode.Mouse;
             {
-                Label.Background = Brushes.Blue;
-                Label.Foreground = Brushes.White;
-                Label.BorderBrush = Brushes.WhiteSmoke;
-                Label.BorderThickness = new Thickness(2);
-                Label.Padding = new Thickness(5);
-                Label.FontSize = 22;
-                Label.Content = title;
+                _label.Background = Brushes.Blue;
+                _label.Foreground = Brushes.White;
+                _label.BorderBrush = Brushes.WhiteSmoke;
+                _label.BorderThickness = new Thickness(2);
+                _label.Padding = new Thickness(5);
+                _label.FontSize = 22;
+                _label.Content = title;
             }
-            Popup.Child = Label;
+            _popup.Child = _label;
         }
 
         void CustomMarkerDemo_Loaded(object sender, RoutedEventArgs e)
         {
-            if (icon.Source.CanFreeze)
+            if (Icon.Source.CanFreeze)
             {
-                icon.Source.Freeze();
+                Icon.Source.Freeze();
             }
         }
 
@@ -78,24 +78,24 @@ namespace BanksMap.Markers
             this.MouseLeftButtonUp -= new MouseButtonEventHandler(CustomMarkerDemo_MouseLeftButtonUp);
             this.MouseLeftButtonDown -= new MouseButtonEventHandler(CustomMarkerDemo_MouseLeftButtonDown);
 
-            Marker.Shape = null;
-            icon.Source = null;
-            icon = null;
-            Popup = null;
-            Label = null;
+            _marker.Shape = null;
+            Icon.Source = null;
+            Icon = null;
+            _popup = null;
+            _label = null;
         }
 
         void CustomMarkerDemo_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Marker.Offset = new Point(-e.NewSize.Width / 2, -e.NewSize.Height);
+            _marker.Offset = new Point(-e.NewSize.Width / 2, -e.NewSize.Height);
         }
 
         void CustomMarkerDemo_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed && IsMouseCaptured)
             {
-                Point p = e.GetPosition(MainWindow.GMapControl);
-                Marker.Position = MainWindow.GMapControl.FromLocalToLatLng((int)(p.X), (int)(p.Y));
+                Point p = e.GetPosition(_mainWindow.GMapCtrl);
+                _marker.Position = _mainWindow.GMapCtrl.FromLocalToLatLng((int)(p.X), (int)(p.Y));
             }
         }
 
@@ -117,14 +117,14 @@ namespace BanksMap.Markers
 
         void MarkerControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            Marker.ZIndex -= 10000;
-            Popup.IsOpen = false;
+            _marker.ZIndex -= 10000;
+            _popup.IsOpen = false;
         }
 
         void MarkerControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            Marker.ZIndex += 10000;
-            Popup.IsOpen = true;
+            _marker.ZIndex += 10000;
+            _popup.IsOpen = true;
         }
     }
 }
