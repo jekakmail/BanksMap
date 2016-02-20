@@ -24,7 +24,7 @@ namespace Database.Parser
 
         public ParserMyFin()
         {
-            //ParseCity();
+            ParseCity();
         }
 
         public void ParseCity()

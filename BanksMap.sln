@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BanksMap", "BanksMap\BanksM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{6F7A3300-EC5A-486C-986B-7F18767E5D05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapBanks", "MapBanks\MapBanks.csproj", "{4FF8BE2C-FA4B-4079-8651-930E82EECEE4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapBanks", "MapBanks\MapBanks.csproj", "{5C749BC7-5F91-492D-8C81-5374DBD8F8A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{6F7A3300-EC5A-486C-986B-7F18767E5D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F7A3300-EC5A-486C-986B-7F18767E5D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F7A3300-EC5A-486C-986B-7F18767E5D05}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4FF8BE2C-FA4B-4079-8651-930E82EECEE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4FF8BE2C-FA4B-4079-8651-930E82EECEE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4FF8BE2C-FA4B-4079-8651-930E82EECEE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4FF8BE2C-FA4B-4079-8651-930E82EECEE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C749BC7-5F91-492D-8C81-5374DBD8F8A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C749BC7-5F91-492D-8C81-5374DBD8F8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C749BC7-5F91-492D-8C81-5374DBD8F8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C749BC7-5F91-492D-8C81-5374DBD8F8A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
