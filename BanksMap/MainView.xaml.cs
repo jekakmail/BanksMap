@@ -81,7 +81,6 @@ namespace BanksMap
             GMapCtrl.Markers.Add(newMarker);
             
         }
-
-       
+        
     }
 }

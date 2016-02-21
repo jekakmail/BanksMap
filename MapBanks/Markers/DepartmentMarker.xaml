@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:MapBanks.Markers"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d">
-    <Image Name="Icon"
+    <Image Name="Picker"
            Width="50"
            Height="50"
            HorizontalAlignment="Center"

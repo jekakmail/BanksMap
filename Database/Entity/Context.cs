@@ -18,6 +18,14 @@ namespace Database.Entity
         public DbSet<Bank> Banks { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    var p = new Parser.ParserMyFin();
+
+        //}
+
         
     }
 }

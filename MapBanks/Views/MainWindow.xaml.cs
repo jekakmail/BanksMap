@@ -7,6 +7,7 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
 using MapBanks.Markers;
+using MapBanks.ViewModels;
 
 namespace MapBanks.Views
 {
@@ -42,7 +43,7 @@ namespace MapBanks.Views
 
             //GMapControl.MouseLeftButtonDown += gMapControl_MouseLeftButtonDown;
             
-            
+
         }
 
         private void GMapCtrl_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -52,6 +53,11 @@ namespace MapBanks.Views
             newMarker.Shape = new UserMarker(this, newMarker, "Пользовательский маркер");
             newMarker.Position = GMapCtrl.FromLocalToLatLng((int)p.X, (int)p.Y);
             GMapCtrl.Markers.Add(newMarker);
+        }
+
+        private void CbBanks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            GMapCtrl.LstMarkers = MainWindowViewModel.LstMarkers;
         }
     }
     

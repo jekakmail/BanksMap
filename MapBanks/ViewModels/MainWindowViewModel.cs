@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using Catel;
 using Catel.Collections;
 using Catel.Data;
@@ -66,48 +67,56 @@ namespace MapBanks.ViewModels
 
         private ParserMyFin _p;
 
-        public ObservableCollection<GMapMarker> LstMarkers
-        {
-            get { return GetValue<ObservableCollection<GMapMarker>>(LstMarkersProperty); }
-            set { SetValue(LstMarkersProperty, value); }
-        }
-        public static readonly PropertyData LstMarkersProperty = RegisterProperty("LstMarkers", typeof(ObservableCollection<GMapMarker>), null);
+        public static ObservableCollection<GMapMarker> LstMarkers = new ObservableCollection<GMapMarker>();
 
         public MainWindowViewModel()
         {
             //_p = new ParserMyFin();
             LstBanks = Database.Func.GetBanks();
-            SelectedBank = LstBanks.First();
+            if (LstBanks.Count > 0)
+            {
+                SelectedBank = LstBanks.First();
+                //LstDepartments = Database.Func.GetDepartments(LstBanks.First());
+            }
+
             CureenciesList = Database.Func.GetCurrenciesNames();
-            LstDepartments = Database.Func.GetDepartments(LstBanks.First());
-            LstMarkers = new ObservableCollection<GMapMarker>();
+
+            if (CureenciesList.Count > 0)
+                SelectedCurrency = CureenciesList.First();
+            
+            //LstMarkers = new ObservableCollection<GMapMarker>();
             
         }
-        
 
-        protected async Task InitializeMarkersAsync()
+
+        private async void InitializeMarkersAsync()
         {
-            await InitializeMarkers();
+            await InitializeMarkers;
         }
 
-        protected Task InitializeMarkers()
+        private Task InitializeMarkers
         {
-            
-            //GMapCtrl.Markers.Clear();
-            LstMarkers.Clear();
-
-                foreach (var depart in LstDepartments)
+            get
+            {
+                if (LstMarkers != null && LstMarkers.Count > 0)
                 {
-                    GMapMarker point = new GMapMarker(new PointLatLng(depart.latitude, depart.longitude));
-
-                    point.Shape = new DepartmentMarker(point, depart.Name);
-                    //point.Offset = new Point(-16, -32);
-                    point.ZIndex = int.MaxValue;
-
-                    LstMarkers.Add(point);
-
+                    //GMapCtrl.Markers.Clear();
+                    LstMarkers.Clear();
                 }
-            return CloseAsync();
+                foreach (var depart in LstDepartments)
+                    {
+                        GMapMarker point = new GMapMarker(new PointLatLng(depart.latitude, depart.longitude));
+
+                        point.Shape = new DepartmentMarker(point, depart.Name);
+                        //point.Offset = new Point(-16, -32);
+                        point.ZIndex = int.MaxValue;
+
+                        LstMarkers.Add(point);
+
+                    }
+                
+                return CloseAsync();
+            }
         }
 
         public override string Title { get { return "MapBanks"; } }

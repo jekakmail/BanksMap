@@ -7,59 +7,84 @@
               ResizeMode="CanResize">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="392*" />
-            <ColumnDefinition Width="125*" />
-        </Grid.ColumnDefinitions>
 
-        <controls:MyGMapControl x:Name="GMapCtrl"
-                                Grid.Column="0"
-                                CanDragMap="True"
-                                Loaded="GMapCtrl_OnLoaded"
-                                LstMarkers="{Binding LstMarkers,
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Сохранить снимок" />
+                <MenuItem Header="Выход" />
+            </MenuItem>
+            <MenuItem Header="Редактирование">
+                <MenuItem Header="Добавить">
+                    <MenuItem Header="Банк" />
+                    <MenuItem Header="Отделение" />
+                </MenuItem>
+                <MenuItem Header="Редактировать">
+                    <MenuItem Header="Банк" />
+                    <MenuItem Header="Отделение" />
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Сервис">
+                <MenuItem Header="Обновить курсы валют" />
+                <MenuItem Header="Настройки" />
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="392*" />
+                <ColumnDefinition Width="125*" />
+            </Grid.ColumnDefinitions>
+            <controls:MyGMapControl x:Name="GMapCtrl"
+                                    Grid.Column="0"
+                                    CanDragMap="True"
+                                    Loaded="GMapCtrl_OnLoaded"
+                                    LstMarkers="{Binding LstMarkers}"
+                                    MouseLeftButtonDown="GMapCtrl_OnMouseLeftButtonDown" />
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0" Header="Банки">
+                    <ComboBox Name="CbBanks"
+                              DisplayMemberPath="Name"
+                              ItemsSource="{Binding LstBanks}"
+                              SelectedItem="{Binding SelectedBank,
                                                      Mode=TwoWay}"
-                                MouseLeftButtonDown="GMapCtrl_OnMouseLeftButtonDown" />
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <GroupBox Grid.Row="0" Header="Банки">
-                <ComboBox Name="CbBanks"
-                          DisplayMemberPath="Name"
-                          ItemsSource="{Binding LstBanks}"
-                          SelectedItem="{Binding SelectedBank,
-                                                 Mode=TwoWay}" />
-            </GroupBox>
-            <GroupBox Grid.Row="1" Header="Валюта">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="3" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <ComboBox ItemsSource="{Binding CureenciesList}" SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}" />
-                    <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0"
-                                Margin="3"
-                                Content="MIN" />
-                        <Button Grid.Column="1"
-                                Margin="3"
-                                Content="MAX" />
+                              SelectionChanged="CbBanks_OnSelectionChanged" />
+                </GroupBox>
+                <GroupBox Grid.Row="1" Header="Валюта">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="3" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ComboBox ItemsSource="{Binding CureenciesList}" SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}" />
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0"
+                                    Margin="3"
+                                    Content="MIN" />
+                            <Button Grid.Column="1"
+                                    Margin="3"
+                                    Content="MAX" />
+                        </Grid>
                     </Grid>
-                </Grid>
-            </GroupBox>
-            <Button Grid.Row="2"
-                    Margin="3"
-                    Content="Ближайший" />
+                </GroupBox>
+                <Button Grid.Row="2"
+                        Margin="3"
+                        Content="Ближайший" />
+            </Grid>
+
         </Grid>
-
     </Grid>
-
 </catel:Window>

@@ -17,7 +17,9 @@ namespace BanksMap
     public class MainViewModel
     {
         private ParserMyFin _p;
+
         private Bank _selectedBank;
+
         private ObservableCollection<Department> _lstDepartments;
 
         public ObservableCollection<Bank> LstBanks { get; set; }

@@ -7,9 +7,6 @@
         Title="MainWindow"
         Width="525"
         Height="350">
-    <Window.DataContext>
-        <local:MainViewModel />
-    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="392*" />
@@ -19,9 +16,7 @@
         <map:MyGMapControl x:Name="GMapCtrl"
                            Grid.Column="0"
                            CanDragMap="True"
-                           Loaded="GMapControl_Loaded"
-                           LstMarkers="{Binding LstDepartments}"
-                           MouseLeftButtonDown="gMapControl_MouseLeftButtonDown" />
+                           Loaded="GMapControl_Loaded" />
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -32,9 +27,9 @@
             <GroupBox Grid.Row="0" Header="Банки">
                 <ComboBox Name="CbBanks"
                           DisplayMemberPath="Name"
-                          ItemsSource="{Binding Path=LstBanks}"
+                          ItemsSource="{Binding LstBanks}"
                           SelectedIndex="0"
-                          SelectedItem="{Binding Path=SelectedBank,
+                          SelectedItem="{Binding SelectedBank,
                                                  Mode=TwoWay}" />
             </GroupBox>
             <GroupBox Grid.Row="1" Header="Валюта">
@@ -44,7 +39,7 @@
                         <RowDefinition Height="3" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ComboBox ItemsSource="{Binding Path=LstCurrencies}" SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}" />
+                    <ComboBox ItemsSource="{Binding LstCurrencies}" SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}" />
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />

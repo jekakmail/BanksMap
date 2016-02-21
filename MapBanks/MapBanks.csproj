@@ -172,9 +172,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Markers\blue-dot.png" />
     <Resource Include="Markers\green-dot.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Markers\red-dot.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

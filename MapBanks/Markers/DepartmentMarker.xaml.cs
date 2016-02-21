@@ -30,7 +30,7 @@ namespace MapBanks.Markers
 
         public DepartmentMarker(GMapMarker marker, string title)
         {
-            //this.InitializeComponent();
+            this.InitializeComponent();
 
             //this._mainWindow = window;
             this._marker = marker;
@@ -39,7 +39,8 @@ namespace MapBanks.Markers
             _label = new Label();
 
             this.Unloaded += new RoutedEventHandler(CustomMarkerDemo_Unloaded);
-            this.Loaded += new RoutedEventHandler(CustomMarkerDemo_Loaded);
+            //this.Loaded += new RoutedEventHandler(CustomMarkerDemo_Loaded);
+            Loaded += new RoutedEventHandler(Target);
             this.SizeChanged += new SizeChangedEventHandler(CustomMarkerDemo_SizeChanged);
             this.MouseEnter += new MouseEventHandler(MarkerControl_MouseEnter);
             this.MouseLeave += new MouseEventHandler(MarkerControl_MouseLeave);
@@ -60,11 +61,19 @@ namespace MapBanks.Markers
             _popup.Child = _label;
         }
 
+        private void Target(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (this.Picker.Source.CanFreeze)
+            {
+                this.Picker.Source.Freeze();
+            }
+        }
+
         void CustomMarkerDemo_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Icon.Source.CanFreeze)
+            if (this.Picker.Source.CanFreeze)
             {
-                Icon.Source.Freeze();
+              this.Picker.Source.Freeze();
             }
         }
 
@@ -80,8 +89,8 @@ namespace MapBanks.Markers
             this.MouseLeftButtonDown -= new MouseButtonEventHandler(CustomMarkerDemo_MouseLeftButtonDown);
 
             _marker.Shape = null;
-            Icon.Source = null;
-            Icon = null;
+            this.Picker.Source = null;
+            this.Picker = null;
             _popup = null;
             _label = null;
         }

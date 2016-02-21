@@ -14,8 +14,9 @@ namespace Database.Entity
         public string Site { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
+        public string Rank { get; set; }
 
         public List<Department> Departments { get; set; }
-
+        public List<Review> Reviews { get; set; } 
     }
 }

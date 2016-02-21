@@ -47,10 +47,6 @@ namespace MapBanks.Controls
 
             
         }
-
-        public MyGMapControl()
-        {
-            
-
+        
     }
 }
