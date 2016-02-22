@@ -98,9 +98,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Markers\DepartmentPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Markers\UserMarker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AddBankView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -114,10 +122,17 @@
     <Compile Include="Markers\DepartmentMarker.xaml.cs">
       <DependentUpon>DepartmentMarker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Markers\DepartmentPicker.xaml.cs">
+      <DependentUpon>DepartmentPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Markers\UserMarker.xaml.cs">
       <DependentUpon>UserMarker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AddBankViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\AddBankView.xaml.cs">
+      <DependentUpon>AddBankView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

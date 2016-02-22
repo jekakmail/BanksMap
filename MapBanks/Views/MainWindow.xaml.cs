@@ -40,15 +40,11 @@ namespace MapBanks.Views
             //курсор мыши.
             GMapCtrl.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             GMapCtrl.ShowCenter = false;
-
-            //GMapControl.MouseLeftButtonDown += gMapControl_MouseLeftButtonDown;
-            
-
         }
 
         private void GMapCtrl_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            System.Windows.Point p = e.GetPosition(GMapCtrl);
+            Point p = e.GetPosition(GMapCtrl);
             GMapMarker newMarker = new GMapMarker(GMapCtrl.Position);
             newMarker.Shape = new UserMarker(this, newMarker, "Пользовательский маркер");
             newMarker.Position = GMapCtrl.FromLocalToLatLng((int)p.X, (int)p.Y);

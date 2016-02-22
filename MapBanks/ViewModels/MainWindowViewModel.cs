@@ -1,16 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using Catel;
 using Catel.Collections;
 using Catel.Data;
+using Catel.Services;
 using Catel.Threading;
 using Database.Entity;
 using Database.Parser;
 using GMap.NET;
 using GMap.NET.WindowsPresentation;
 using MapBanks.Markers;
+using MapBanks.Views;
+using Department = Database.Entity.Department;
 
 namespace MapBanks.ViewModels
 {
@@ -19,7 +23,34 @@ namespace MapBanks.ViewModels
 
     public class MainWindowViewModel : ViewModelBase
     {
-        
+        private readonly IUIVisualizerService _visualizerService;
+        private readonly IMessageService _messageService;
+
+        public Command AddBankCommand { get; private set; }
+
+        public MainWindowViewModel(IUIVisualizerService visualizerService, IMessageService messageService)
+        {
+            _visualizerService = visualizerService;
+            _messageService = messageService;
+
+            AddBankCommand = new Command(OnAddBankCommandExecute);
+        }
+
+        private void OnAddBankCommandExecute()
+        {
+            var dlg = new AddBankViewModel(LstBanks);
+
+            if (_visualizerService.ShowDialog(dlg) == true)
+            {
+                _messageService.ShowInformationAsync("Банк успешно добавлен!");
+                LstBanks = Database.Func.GetBanks();
+            }
+            else
+            {
+                if (dlg.Result == false)
+                    _messageService.ShowWarningAsync("Что то пошло не так...  :(", "Внимание");
+            }
+        }
         
         public Bank SelectedBank
         {
@@ -31,7 +62,7 @@ namespace MapBanks.ViewModels
                 InitializeMarkersAsync();
             }
         }
-        public static readonly PropertyData SelectedBankProperty = RegisterProperty("SelectedBank", typeof(Bank), null);
+        public static readonly PropertyData SelectedBankProperty = RegisterProperty("SelectedBank", typeof(Bank));
 
         
         public ObservableCollection<Bank> LstBanks
@@ -39,7 +70,7 @@ namespace MapBanks.ViewModels
             get { return GetValue<ObservableCollection<Bank>>(LstBanksProperty); }
             set { SetValue(LstBanksProperty, value); }
         }
-        public static readonly PropertyData LstBanksProperty = RegisterProperty("LstBanks", typeof(ObservableCollection<Bank>), null);
+        public static readonly PropertyData LstBanksProperty = RegisterProperty("LstBanks", typeof(ObservableCollection<Bank>));
 
 
         public ObservableCollection<Department> LstDepartments
@@ -47,7 +78,7 @@ namespace MapBanks.ViewModels
             get { return GetValue<ObservableCollection<Department>>(LstDepartmentsProperty); }
             set { SetValue(LstDepartmentsProperty, value); }
         }
-        public static readonly PropertyData LstDepartmentsProperty = RegisterProperty("LstDepartments", typeof(ObservableCollection<Department>), null);
+        public static readonly PropertyData LstDepartmentsProperty = RegisterProperty("LstDepartments", typeof(ObservableCollection<Department>));
 
         
         public ObservableCollection<string> CureenciesList
@@ -55,7 +86,7 @@ namespace MapBanks.ViewModels
             get { return GetValue<ObservableCollection<string>>(CureenciesListProperty); }
             set { SetValue(CureenciesListProperty, value); }
         }
-        public static readonly PropertyData CureenciesListProperty = RegisterProperty("CureenciesList", typeof(ObservableCollection<string>), null);
+        public static readonly PropertyData CureenciesListProperty = RegisterProperty("CureenciesList", typeof(ObservableCollection<string>));
 
         
         public string SelectedCurrency
@@ -63,30 +94,11 @@ namespace MapBanks.ViewModels
             get { return GetValue<string>(SelectedCurrencyProperty); }
             set { SetValue(SelectedCurrencyProperty, value); }
         }
-        public static readonly PropertyData SelectedCurrencyProperty = RegisterProperty("SelectedCurrency", typeof(string), null);
+        public static readonly PropertyData SelectedCurrencyProperty = RegisterProperty("SelectedCurrency", typeof(string));
 
         private ParserMyFin _p;
 
         public static ObservableCollection<GMapMarker> LstMarkers = new ObservableCollection<GMapMarker>();
-
-        public MainWindowViewModel()
-        {
-            //_p = new ParserMyFin();
-            LstBanks = Database.Func.GetBanks();
-            if (LstBanks.Count > 0)
-            {
-                SelectedBank = LstBanks.First();
-                //LstDepartments = Database.Func.GetDepartments(LstBanks.First());
-            }
-
-            CureenciesList = Database.Func.GetCurrenciesNames();
-
-            if (CureenciesList.Count > 0)
-                SelectedCurrency = CureenciesList.First();
-            
-            //LstMarkers = new ObservableCollection<GMapMarker>();
-            
-        }
 
 
         private async void InitializeMarkersAsync()
@@ -111,8 +123,7 @@ namespace MapBanks.ViewModels
                         //point.Offset = new Point(-16, -32);
                         point.ZIndex = int.MaxValue;
 
-                        LstMarkers.Add(point);
-
+                        if (LstMarkers != null) LstMarkers.Add(point);
                     }
                 
                 return CloseAsync();
@@ -130,12 +141,30 @@ namespace MapBanks.ViewModels
             await base.InitializeAsync();
 
             // TODO: subscribe to events here
+            //
+            //!!!!Раскомментировать для парсинга базы!!!!!
+            //
+            //_p = new ParserMyFin();
+
+
+            LstBanks = Database.Func.GetBanks();
+            if (LstBanks.Count > 0)
+            {
+                SelectedBank = LstBanks.First();
+                //LstDepartments = Database.Func.GetDepartments(LstBanks.First());
+            }
+            
+            CureenciesList = Database.Func.GetCurrenciesNames();
+            
+            if (CureenciesList.Count > 0)
+                SelectedCurrency = CureenciesList.First();
+            
         }
 
         protected override async Task CloseAsync()
         {
             // TODO: unsubscribe from events here
-
+            
             await base.CloseAsync();
         }
     }

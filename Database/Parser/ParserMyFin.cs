@@ -275,5 +275,10 @@ namespace Database.Parser
             }
             
         }
+
+         ~ParserMyFin()
+        {
+            db.Dispose();
+        }
     }
 }
